@@ -1,0 +1,27 @@
+Primeiro comando SQL usado para atividade 4 foi CREATE TABLE Equipaments, vamos criar um objeto que 
+vai coletar as info dessa tabela para realizar a coleta da latência, perdas de pacote... 
+
+CREATE TABLE Equipaments (
+    EquipamentsID INT PRIMARY KEY,           
+    Name VARCHAR(100) NOT NULL,             
+    IP VARCHAR(20) UNIQUE,               
+    Active BOOLEAN DEFAULT TRUE             
+);
+
+A segunda tabela que decidir criar foi Collection para armazenar os registros da coleta do IP.
+
+    CREATE TABLE Collection ( 
+        ColetaID INT PRIMARY KEY,
+        EquipamentsID INT NOT NULL,
+        Latencia INT,
+        PacoteseEnviados INT,
+        PacotesePerdidos INT,
+        FOREIGN KEY (EquipamentsID) // Referesse a EquipamentsID presente na tabela Collection.
+            REFERENCES Equipaments(EquipamentsID) // Referesse a EquipamentsID da tabela Equipaments.
+    );
+
+
+Vamos alimentar as tabelas. 
+
+INSERT INTO Equipaments (EquipamentsID,Name,IP,Active)
+VALUES (1, "IP Headend", "201.76.137.249", 1);
