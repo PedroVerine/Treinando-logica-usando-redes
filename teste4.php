@@ -30,7 +30,7 @@ function conectarBanco()
     // credencias
     $host = "localhost";
     $usuario = "root";
-    $senha = "*7vn_71";
+    $senha = "s3g1nf0*7vn_71";
     $banco = "monitor_rede";
     // var armazenando o request ao banco
     $conexao = new mysqli($host, $usuario, $senha, $banco);
@@ -83,9 +83,6 @@ function  ExecutPing() {
  $output = shell_exec($cmd);
  return $output;
 
-        
-
-
 };
 
 $var2 = ExecutPing();
@@ -108,16 +105,18 @@ Estes filtros são identificados pelas constantes FILTER_SANITIZE_*. Por exemplo
  inadequados para um endereço de e-mail. Entretanto, os dados sanitizados não são validados para verificar se o endereço é válido.
 */
 
+
+// primeiro estamos tentando encotrnar palavras chave na consulta depois vamos buscar info proximas
 function FiltrarInfo($saidaPing)
 {
     
-    $palavrasChave = ["Resposta", "Esgotado", "tempo"];
+    $palavrasChave = ["Resposta", "Esgotado", "tempo"]; // palavras que vamos buscar
+    
+    $encontradas = []; // array pra armazenar  
 
-    $encontradas = [];
+    foreach ($palavrasChave as $palavra) { //loop pra buscar as palavras chaves e colocar na array 
 
-    foreach ($palavrasChave as $palavra) {
-
-        if (stripos($saidaPing, $palavra) !== false) {
+        if (stripos($saidaPing, $palavra) !== false) {  // O stripos busca numa string as sub string que queremos da var $palavrasChaves
             $encontradas[] = $palavra;
         }
     }
@@ -125,4 +124,8 @@ function FiltrarInfo($saidaPing)
     return $encontradas;
 }
 
+$saidaPing1 = ExecutPing();
+
+$resultado = FiltrarInfo($saidaPing1);
+var_dump( $resultado);
 
